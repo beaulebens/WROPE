@@ -1,0 +1,33 @@
+{
+  "name": "WROPE",
+  "version": "1.0.0",
+  "description": "An experiment creating a river of posts, based on the WordPress REST API",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/beaulebens/WROPE.git"
+  },
+  "keywords": [
+    "wordpress",
+    "river",
+    "of",
+    "news",
+    "backbone",
+    "backbonejs",
+    "experiment"
+  ],
+  "author": "Beau Lebens",
+  "license": "GPL",
+  "bugs": {
+    "url": "https://github.com/beaulebens/WROPE/issues"
+  },
+  "homepage": "https://github.com/beaulebens/WROPE",
+  "dependencies": {
+    "backbone": "^1.1.2",
+    "jquery": "^2.1.1",
+    "photon": "^1.0.2"
+  }
+}

@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+  <title>WROPE</title>
+  <meta name="viewport" content="width=device-width, user-scalable=no">
+  <head>
+    <style>
+    body {
+      font: 16px Helvetica, Arial, sans-serif;
+      background: #ccc;
+      color: #222;
+      margin: .5em 0 0;
+      padding: 0;
+    }
+    .post-river {
+      list-style-type: none;
+      margin: 0;
+      padding: 0;
+      -webkit-overflow-scrolling: touch;
+    }
+    .post {
+      margin: 0 .5em .5em;
+      padding: .5em;
+      background: #fff;
+      border-bottom: solid 3px #444;
+    }
+    .post-header {
+      margin-left: 50px;
+      height: 40px;
+    }
+    .post-title {
+      padding: 0;
+      margin: 0;
+      font-size: 21px;
+      overflow-y: hidden;
+      white-space: nowrap;
+    }
+    .post-title a {
+      text-decoration: none;
+      color: inherit;
+    }
+    .post-avatar {
+      float: left;
+      margin-left: -50px;
+      -webkit-filter: grayscale(80%);
+      -moz-filter: grayscale(80%);
+      filter: grayscale(80%);
+    }
+    .post-author,
+    .post-date {
+      display: inline;
+      font-size: 12px;
+      color: #888;
+      margin: 0;
+      padding: 0;
+      overflow-y: hidden;
+    }
+    .feature {
+      max-width: 100%;
+      height: 200px;
+    }
+    </style>
+  </head>
+<body>
+  <div id="wrope"></div>
+
+  <script type="text/html" id="tpl-post">
+    <div class="post-header">
+      <div class="post-avatar"><img src="<%= author.attributes.avatar %>" width="40" height="40"></div>
+      <h1 class="post-title"><a href="<%= link %>"><%= title %></a></h1>
+      <div class="post-author"><%= author.name %></div>
+      <div class="post-date"><%= date %></div>
+    </div>
+    <div class="post-body">
+      <% if ( featured_image ) { %>
+        <div class="featured-image">
+          <a href="<%= link %>">
+            <img data-src="<%= photon( featured_image.source ) %>" alt="" class="feature">
+          </a>
+          </div>
+      <% } %>
+      <%= excerpt %>
+    </div>
+  </script>
+
+  <script src="node_modules/jquery/dist/jquery.min.js"></script>
+  <script src="node_modules/backbone/node_modules/underscore/underscore-min.js"></script>
+  <script src="node_modules/backbone/backbone-min.js"></script>
+  <script src="node_modules/photon/dist/photon.js"></script>
+  <script src="wrope.js"></script>
+  <script>
+    // Point to the API endpoint for your WP install. Required for WP-API.
+    var WP_API_Settings = {
+      root:  'http://fishing.dentedreality.com.au/wp-json'
+      //root:  'http://beaurrito.local/dev/wp-stable/wp-json'
+      // Don't define a nonce, thus unauthenticated requests.
+    };
+
+    // Boots up the WROPE application
+    $(document).on( 'ready', function() {
+      WROPE.start();
+    });
+  </script>
+  <script src="wp-api/build/js/wp-api.min.js"></script>
+</body>
+</html>
