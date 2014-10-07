@@ -4,69 +4,20 @@
   <meta name="viewport" content="width=device-width, user-scalable=no">
   <head>
     <style>
-    body {
-      font: 16px Helvetica, Arial, sans-serif;
-      background: #ccc;
-      color: #222;
-      margin: .5em 0 0;
-      padding: 0;
-    }
-    .post-river {
-      list-style-type: none;
-      margin: 0;
-      padding: 0;
-      -webkit-overflow-scrolling: touch;
-    }
-    .post {
-      margin: 0 .5em .5em;
-      padding: .5em;
-      background: #fff;
-      border-bottom: solid 3px #444;
-    }
-    .post-header {
-      margin-left: 50px;
-      height: 40px;
-    }
-    .post-title {
-      padding: 0;
-      margin: 0;
-      font-size: 21px;
-      overflow-y: hidden;
-      white-space: nowrap;
-    }
-    .post-title a {
-      text-decoration: none;
-      color: inherit;
-    }
-    .post-avatar {
-      float: left;
-      margin-left: -50px;
-      -webkit-filter: grayscale(80%);
-      -moz-filter: grayscale(80%);
-      filter: grayscale(80%);
-    }
-    .post-author,
-    .post-date {
-      display: inline;
-      font-size: 12px;
-      color: #888;
-      margin: 0;
-      padding: 0;
-      overflow-y: hidden;
-    }
-    .feature {
-      max-width: 100%;
-      height: 200px;
-    }
+    body { font: 16px Helvetica, Arial, sans-serif; background: #ccc; color: #222; margin: .5em 0 0; padding: 0; }
+    .post-river { list-style-type: none; margin: 0; padding: 0; -webkit-overflow-scrolling: touch; }
+    .post { margin: 0 .5em .5em; padding: .5em; background: #fff; border-bottom: solid 3px #444; }
+    .post-header { margin-left: 50px; height: 40px; }
+    .post-title { padding: 0; margin: 0; font-size: 21px; overflow-y: hidden; white-space: nowrap; }
+    .post-title a { text-decoration: none; color: inherit; }
+    .post-avatar { float: left; margin-left: -50px; -webkit-filter: grayscale(80%); -moz-filter: grayscale(80%); filter: grayscale(80%); }
+    .post-author, .post-date { display: inline; font-size: 12px; color: #888; margin: 0; padding: 0; overflow-y: hidden; }
+    .feature { max-width: 100%; height: 200px; }
     /**
      * These are to avoid some trickier rendering problems
      * on my site; galleries, embedded maps, etc
      */
-    .post-body p img,
-    .tiled-gallery,
-    .wp_geo_map {
-      display: none;
-    }
+    .post-body p img, .tiled-gallery, .wp_geo_map { display: none; }
     </style>
   </head>
 <body>
@@ -103,8 +54,8 @@
   <script>
     // Point to the API endpoint for your WP install. Required for WP-API.
     var WP_API_Settings = {
-      root:  'http://fishing.dentedreality.com.au/wp-json'
-      //root:  'http://beaurrito.local/dev/wp-stable/wp-json'
+      // root:  'http://fishing.dentedreality.com.au/wp-json'
+      root:  'http://beaurrito.local/dev/wp-stable/wp-json'
       // Don't define a nonce, thus unauthenticated requests.
     };
 
