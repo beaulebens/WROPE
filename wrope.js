@@ -47,7 +47,7 @@ var WROPE = {
 
     renderPost: function( post ) {
       var thePost = WROPE.posts.get( post );
-      var postView = new WROPE.postView( { model: thePost, tagName: 'div' } );
+      var postView = new WROPE.postView( { model: thePost, tagName: 'div', full: true } );
       $( '#wrope' ).slideUp( function() {
         $(this).html( postView.$el ).slideDown();
         WROPE.optimizeImageSize();
@@ -100,6 +100,7 @@ var WROPE = {
     },
 
     initialize: function( options ) {
+      this.full = options.full || false;
       this.render();
     },
 
@@ -113,7 +114,7 @@ var WROPE = {
     },
 
     render: function() {
-      this.$el.html( this.template( this.model.attributes ) );
+      this.$el.html( this.template( _.extend( {}, this.model.attributes, { full: this.full } ) ) );
       return this;
     }
   }),
