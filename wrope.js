@@ -1,19 +1,16 @@
 var WROPE = {
   posts: null,
 
-  fetchPosts: function( callback ) {
-    var posts = new wp.api.collections.Posts();
-    posts.fetch().done( function() {
-      WROPE.posts = posts.clone();
-      if ( posts.hasMore() ) {
-        posts.more().done( function() { // Get a second batch
-          WROPE.posts.add( posts.toJSON() );
-          callback();
-        });
-      } else {
-        callback();
-      }
-    });
+  /**
+   * Handles all the boot-up for the application, including initial request of
+   * posts, rendering templates, etc.
+   * @return WROPE application object
+   */
+  start: function() {
+    // Set up our router, start monitoring URLs, and get going
+    this.router = new this.routerObj();
+    Backbone.history.start( { root: '/dev/WROPE/' } );
+    return this;
   },
 
   routerObj: Backbone.Router.extend({
@@ -21,12 +18,24 @@ var WROPE = {
 
     routes: {
       '': 'index',
-      ':post': 'post'
+      'posts/:post': 'post'
     },
 
     index: function() {
       // Get a collection of posts from WP and render them once returned
-      WROPE.fetchPosts( function() { this.renderRiver(); }.bind( this ) );
+      WROPE.fetchPosts( function() {
+        this.renderRiver();
+      }.bind( this ) );
+    },
+
+    post: function( post ) {
+      if ( null === WROPE.posts ) {
+        WROPE.fetchPosts( function() {
+          this.renderPost( post );
+        }.bind( this ) );
+      } else {
+        this.renderPost( post );
+      }
     },
 
     renderRiver: function() {
@@ -37,14 +46,6 @@ var WROPE = {
       $(window).on('resize', _.debounce( WROPE.optimizeImageSize, 500 ) );
     },
 
-    post: function( post ) {
-      if ( null === WROPE.posts ) {
-        WROPE.fetchPosts( function() { this.renderPost( post ); }.bind( this ) );
-      } else {
-        this.renderPost( post );
-      }
-    },
-
     renderPost: function( post ) {
       var thePost = WROPE.posts.get( post );
       var postView = new WROPE.postView( { model: thePost, tagName: 'div', full: true } );
@@ -52,7 +53,6 @@ var WROPE = {
         $(this).html( postView.$el ).slideDown();
         WROPE.optimizeImageSize();
       });
-      return;
     }
   }),
 
@@ -63,10 +63,10 @@ var WROPE = {
 
     initialize: function( options ) {
       this.collection = options.collection;
-      this.renderAll();
+      this.render();
     },
 
-    renderAll: function() {
+    render: function() {
       this.collection.each( function( post ) {
         // Filter currently doesn't support ignore_sticky_posts
         // Let's skip them for this demo app
@@ -78,11 +78,6 @@ var WROPE = {
       }.bind( this ) );
 
       $( '#wrope' ).html( this.$el );
-    },
-
-    render: function() {
-      // Nothing to render
-      return this;
     }
   }),
 
@@ -109,15 +104,40 @@ var WROPE = {
     },
 
     goToPage: function() {
-      WROPE.router.navigate( '/' + this.model.get( 'ID' ), { trigger: true } );
+      WROPE.router.navigate( '/posts/' + this.model.get( 'ID' ), { trigger: true } );
       return;
     },
 
     render: function() {
-      this.$el.html( this.template( _.extend( {}, this.model.attributes, { full: this.full } ) ) );
+      this.$el.html(
+        this.template(
+          _.extend(
+            {},
+            this.model.attributes,
+            {
+              full: this.full
+            }
+          )
+        )
+      );
       return this;
     }
   }),
+
+  fetchPosts: function( callback ) {
+    var posts = new wp.api.collections.Posts();
+    posts.fetch().done( function() {
+      WROPE.posts = posts.clone();
+      if ( posts.hasMore() ) {
+        posts.more().done( function() { // Get a second batch
+          WROPE.posts.add( posts.toJSON() );
+          callback();
+        });
+      } else {
+        callback();
+      }
+    });
+  },
 
   /**
    * Do some Photon magic. https://developer.wordpress.com/docs/photon/
@@ -130,17 +150,5 @@ var WROPE = {
     $('.feature').attr( 'src', function() {
       return $(this).data('src') + '?resize=' + w * 2 + ',400';
     });
-  },
-
-  /**
-   * Handles all the boot-up for the application, including initial request of
-   * posts, rendering templates, etc.
-   * @return WROPE application object
-   */
-  start: function() {
-    // Set up our router, start monitoring URLs, and get going
-    this.router = new this.routerObj();
-    Backbone.history.start( { root: '/dev/WROPE/' } );
-    return this;
   }
 };
