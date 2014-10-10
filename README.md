@@ -15,7 +15,11 @@ Running
 =======
 Currently it's hacked together to work on my laptop, so the root of this repo needs to be web-accessible via `/dev/WROPE/` (I know, weird).
 
-Once you clone the repo, you'll need to make sure you get the submodule (`wp-api`), so execute:
+Once you clone the repo, you'll want to do
+
+`npm install`
+
+to get dependencies (jQuery etc), and then you'll need to make sure you get the `wp-api` submodule, so execute:
 
 `git submodule update --init --recursive`
 
