@@ -9,13 +9,11 @@ var WROPE = {
   start: function() {
     // Set up our router, start monitoring URLs, and get going
     this.router = new this.routerObj();
-    Backbone.history.start( { root: '/dev/WROPE/' } );
+    Backbone.history.start();
     return this;
   },
 
   routerObj: Backbone.Router.extend({
-    root: '/dev/WROPE/',
-
     routes: {
       '': 'index',
       'posts/:post': 'post'
